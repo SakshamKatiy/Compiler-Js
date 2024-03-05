@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor Piyush Bharadwaj  - Projects</title>
+    <!-- CSS only -->   
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #013b57;
+        } 
+        .leftpart {
+            flex-basis: 50%;
+            background-color: #24414b;
+            padding: 20px;
+            color: #0f1111;
+        }
+        .rightpart {
+            flex-basis: 50%;
+            background-color: #112435;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .content label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border: none;
+            background-color: #acbfd7;
+            color: #030505;
+            font-family: monospace;
+            font-size: 16px;
+            resize: none;
+        }
+        .output-label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #38617a;
+            margin-bottom: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100% - 40px); 
+            border: none;
+            background-color: #6b93b7;
+        }
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="leftpart">
+        <div class="content">
+           
+            <label for="html">HTML</label>
+            <textarea class="html"></textarea>
+        </div>
+        <div class="content">
+            <label for="css">CSS</label>
+            <textarea class="css"></textarea>
+        </div>
+        <div class="content">
+            <label for="javascript">JavaScript</label>
+            <textarea class="javascript"></textarea>
+        </div>
+    </div>
+    <div class="rightpart">
+        <div class="output-label">Output</div>
+        <iframe id="output" class="fade-in"></iframe>
+    </div>
+
+    <script>
+        let output = document.querySelector("#output");
+        let htmlTextarea = document.querySelector(".html");
+        let cssTextarea = document.querySelector(".css");
+        let jsTextarea = document.querySelector(".javascript");
+
+        let htmlCode = '';
+        let cssCode = '';
+        let jsCode = '';
+
+        htmlTextarea.addEventListener("keyup", () => {
+            htmlCode = htmlTextarea.value;
+            render();
+        });
+
+        cssTextarea.addEventListener("keyup", () => {
+            cssCode = cssTextarea.value;
+            render();
+        });
+
+        jsTextarea.addEventListener("keyup", () => {
+            jsCode = jsTextarea.value;
+            render();
+        });
+
+        function render() {
+            output.contentDocument.body.innerHTML = htmlCode;
+            output.contentDocument.head.innerHTML = `<style>${cssCode}</style>`;
+            output.contentWindow.eval(jsCode);
+        }
+    </script>
+</body>
+</html>
